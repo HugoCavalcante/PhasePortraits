@@ -1,2 +1,2 @@
 # PhasePortraits
-Python (matplotlib) software do draw phase portraits for dynamical systems
+Python (matplotlib) software to draw phase portraits for dynamical systems.
