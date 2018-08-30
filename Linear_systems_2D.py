@@ -6,6 +6,7 @@ Created on Tue Aug 21 16:48:08 2018
 """
 
 from numpy import *
+from numpy.linalg import eig
 from matplotlib.pyplot import *
 
 
@@ -13,23 +14,27 @@ def det(A):
     """ Calcula o determinante de uma matriz 2x2 """
     return (A[0,0]*A[1,1]-A[1,0]*A[0,1])
 
-def eigvectors_2x2(A, L1, L2):
-    """ retorna os autovetores da matriz A, 2x2 """
-    v1 = zeros(2)
-    v2 = zeros(2)
-    # autovetor associado ao autovalor L1
-    if abs(A[0,1])> 1e-16:
-        v1[0] = 1.0
-        v1[1] = (L1 -A[0,0])/A[0,1]
-    elif abs(A[0,0])> 1e-16:
-        v1[0] = 1.0
-    # autovetor associado ao autovalor L2
-    if abs(A[0,1])> 1e-16:
-        v2[0] = 1.0
-        v2[1] = (L2 -A[0,0])/A[0,1]
-    elif abs(A[0,0])> 1e-16:
-        v2[0] = 1.0
-    return v1, v2
+#def eigvectors_2x2(A, L1, L2):
+#    """ retorna os autovetores da matriz A, 2x2 """
+#    v1 = zeros(2)
+#    v2 = zeros(2)
+#    # autovetor associado ao autovalor L1
+#    if abs(A[0,1])> 1e-16:
+#        v1[0] = 1.0
+#        v1[1] = (L1 -A[0,0])/A[0,1]
+#    elif abs(A[1,0])> 1e-16:
+#        v1[0] = 1.0
+#        v1[1] = (L1 -A[0,0])/A[0,1]
+#    else:
+#        v1[1] = 1.0
+#    # autovetor associado ao autovalor L2
+#    if abs(A[0,1])> 1e-16:
+#        v2[0] = 1.0
+#        v2[1] = (L2 -A[0,0])/A[0,1]
+#    elif abs(A[0,0])> 1e-16:
+#        v2[1] = L2/A[0,0]
+#    return v1, v2
+
 
 A = array([[0, 1], [-2, -3]])
 #A = array([[0, 1], [-1, 0.01]])
@@ -57,7 +62,9 @@ ax1 = gca()
 ### If the lambdas are real we can draw the eigenvectors:
 if isreal(lambda1):
     print("Os lambdas são reais. Desenhando autovetores.")
-    v1, v2 = eigvectors_2x2(A, lambda1, lambda2)
+    #v1, v2 = eigvectors_2x2(A, lambda1, lambda2)
+    lambda12, (v1, v2) = eig(A)
+    lambda1, lambda2 = lambda12
     xlim(1.1 * amin(-fabs([v1[0], v2[0], 1])), 1.1 * amax(fabs([v1[0], v2[0], 1])))
     ylim(1.1 * amin(-fabs([v1[1], v2[1], 1])), 1.1 * amax(fabs([v1[1], v2[1], 1])))
     ### desenha setas associadas a v1
